@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Project Intake — Nolvek</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --border: #222222;
+      --accent: #c8ff00;
+      --accent-dim: rgba(200,255,0,0.08);
+      --text: #f0f0f0;
+      --muted: #666;
+      --error: #ff4d4d;
+      --radius: 6px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 0 0 80px;
+    }
+
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Header */
+    .header {
+      position: relative;
+      z-index: 1;
+      border-bottom: 1px solid var(--border);
+      padding: 28px 40px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.2rem;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+
+    .logo-sep {
+      width: 1px;
+      height: 18px;
+      background: var(--border);
+    }
+
+    .logo-sub {
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      z-index: 1;
+      padding: 64px 40px 48px;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 4px 10px;
+      border-radius: 2px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 span { color: var(--accent); }
+
+    .hero p {
+      font-size: 1rem;
+      color: #999;
+      max-width: 560px;
+      line-height: 1.75;
+    }
+
+    /* Progress bar */
+    .progress-bar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      height: 3px;
+      background: var(--border);
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    /* Form */
+    form {
+      position: relative;
+      z-index: 1;
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    /* Section */
+    .section {
+      margin-bottom: 56px;
+    }
+
+    .section-label {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* Field */
+    .field {
+      margin-bottom: 28px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: #ccc;
+      margin-bottom: 8px;
+    }
+
+    label .req {
+      color: var(--accent);
+      margin-left: 3px;
+    }
+
+    .hint {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 8px;
+      margin-top: -4px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    select,
+    textarea {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 300;
+      padding: 13px 16px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      appearance: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(200,255,0,0.08);
+    }
+
+    textarea { resize: vertical; min-height: 110px; }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      cursor: pointer;
+    }
+
+    /* Radio / Checkbox cards */
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+    }
+
+    .option-card input { display: none; }
+
+    .option-card label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 13px 16px;
+      cursor: pointer;
+      font-size: 0.86rem;
+      font-weight: 400;
+      color: #aaa;
+      transition: border-color 0.2s, background 0.2s, color 0.2s;
+      margin: 0;
+    }
+
+    .option-card label::before {
+      content: '';
+      width: 16px;
+      height: 16px;
+      min-width: 16px;
+      border: 1px solid var(--muted);
+      border-radius: 3px;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .option-card.radio label::before {
+      border-radius: 50%;
+    }
+
+    .option-card input:checked + label {
+      border-color: var(--accent);
+      background: var(--accent-dim);
+      color: var(--text);
+    }
+
+    .option-card input:checked + label::before {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* Two col */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 580px) {
+      .two-col { grid-template-columns: 1fr; }
+      .hero, form { padding-left: 20px; padding-right: 20px; }
+      .header { padding: 20px; }
+    }
+
+    /* Submit */
+    .submit-area {
+      border-top: 1px solid var(--border);
+      padding-top: 40px;
+      margin-top: 16px;
+    }
+
+    .submit-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    button[type="submit"] {
+      background: var(--accent);
+      color: #000;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: var(--radius);
+      padding: 16px 40px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+
+    button[type="submit"]:hover { opacity: 0.85; transform: translateY(-1px); }
+    button[type="submit"]:active { transform: translateY(0); }
+
+    /* Success */
+    #success-message {
+      display: none;
+      text-align: center;
+      padding: 80px 40px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .success-icon {
+      width: 56px;
+      height: 56px;
+      background: var(--accent-dim);
+      border: 1px solid var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 1.4rem;
+    }
+
+    #success-message h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.6rem;
+      margin-bottom: 12px;
+    }
+
+    #success-message p { color: #999; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="logo">Nolvek</div>
+    <div class="logo-sep"></div>
+    <div class="logo-sub">Client Project Intake</div>
+  </div>
+
+  <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+  <div class="hero">
+    <div class="hero-tag">New Project</div>
+    <h1>Tell us about your <span>project.</span></h1>
+    <p>Fill out the form below so we can understand your needs and prepare a tailored proposal. This typically takes 5–8 minutes.</p>
+  </div>
+
+  <form id="intake-form" action="https://formsubmit.co/kevlongalloway1999@icloud.com" method="POST">
+
+    <!-- Honeypot + config -->
+    <input type="hidden" name="_captcha" value="false"/>
+    <input type="hidden" name="_subject" value="New Client Project Intake — Nolvek"/>
+    <input type="hidden" name="_template" value="table"/>
+    <input type="text" name="_honey" style="display:none"/>
+
+    <!-- 01 Contact Info -->
+    <div class="section">
+      <div class="section-label">01 — Contact Info</div>
+
+      <div class="two-col">
+        <div class="field">
+          <label>Full Name <span class="req">*</span></label>
+          <input type="text" name="Full Name" placeholder="Jane Smith" required/>
+        </div>
+        <div class="field">
+          <label>Company / Organization</label>
+          <input type="text" name="Company" placeholder="Acme Corp (if applicable)"/>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="field">
+          <label>Email Address <span class="req">*</span></label>
+          <input type="email" name="Email" placeholder="you@example.com" required/>
+        </div>
+        <div class="field">
+          <label>Phone Number</label>
+          <input type="tel" name="Phone" placeholder="+1 (404) 000-0000"/>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Preferred Contact Method</label>
+        <div class="options-grid">
+          <div class="option-card radio"><input type="radio" name="Preferred Contact" value="Email"/> <label>Email</label></div>
+          <div class="option-card radio"><input type="radio" name="Preferred Contact" value="Phone"/> <label>Phone</label></div>
+          <div class="option-card radio"><input type="radio" name="Preferred Contact" value="Text"/> <label>Text Message</label></div>
+          <div class="option-card radio"><input type="radio" name="Preferred Contact" value="No Preference"/> <label>No Preference</label></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 02 Project Overview -->
+    <div class="section">
+      <div class="section-label">02 — Project Overview</div>
+
+      <div class="field">
+        <label>What type of software are you looking to build? <span class="req">*</span></label>
+        <div class="hint">Select all that apply.</div>
+        <div class="options-grid">
+          <div class="option-card"><input type="checkbox" name="Project Type" value="Web Application"/> <label>Web Application</label></div>
+          <div class="option-card"><input type="checkbox" name="Project Type" value="Mobile App"/> <label>Mobile App</label></div>
+          <div class="option-card"><input type="checkbox" name="Project Type" value="Dashboard / Admin Panel"/> <label>Dashboard / Admin Panel</label></div>
+          <div class="option-card"><input type="checkbox" name="Project Type" value="API / Backend System"/> <label>API / Backend System</label></div>
+          <div class="option-card"><input type="checkbox" name="Project Type" value="Automation Tool"/> <label>Automation Tool</label></div>
+          <div class="option-card"><input type="checkbox" name="Project Type" value="AI Integration"/> <label>AI Integration</label></div>
+          <div class="option-card"><input type="checkbox" name="Project Type" value="Hardware Integration"/> <label>Hardware Integration</label></div>
+          <div class="option-card"><input type="checkbox" name="Project Type" value="Not Sure Yet"/> <label>Not Sure Yet</label></div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Describe your project in your own words. <span class="req">*</span></label>
+        <div class="hint">What should the software do? What problem does it solve?</div>
+        <textarea name="Project Description" placeholder="e.g. We need a web portal where our security team can view live camera feeds, manage access permissions, and receive alerts when motion is detected at specific zones..."></textarea>
+      </div>
+
+      <div class="field">
+        <label>What industry is this project in?</label>
+        <select name="Industry">
+          <option value="" disabled selected>Select an industry</option>
+          <option>Security & Surveillance</option>
+          <option>Construction & Contracting</option>
+          <option>Healthcare & Medical</option>
+          <option>Real Estate</option>
+          <option>Retail & E-Commerce</option>
+          <option>Logistics & Transportation</option>
+          <option>Hospitality & Food Service</option>
+          <option>Education</option>
+          <option>Manufacturing</option>
+          <option>Finance & Insurance</option>
+          <option>Government & Public Sector</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Do you have any existing systems this needs to connect to?</label>
+        <div class="hint">e.g. cameras, sensors, databases, third-party software, APIs</div>
+        <textarea name="Existing Systems" placeholder="e.g. Hikvision NVR cameras, existing CRM, QuickBooks, etc." style="min-height:80px"></textarea>
+      </div>
+    </div>
+
+    <!-- 03 Features & Functionality -->
+    <div class="section">
+      <div class="section-label">03 — Features & Functionality</div>
+
+      <div class="field">
+        <label>Which of these features do you need? <span class="req">*</span></label>
+        <div class="hint">Select all that apply.</div>
+        <div class="options-grid">
+          <div class="option-card"><input type="checkbox" name="Features" value="User login / accounts"/> <label>User Login / Accounts</label></div>
+          <div class="option-card"><input type="checkbox" name="Features" value="Role-based access control"/> <label>Role-Based Access Control</label></div>
+          <div class="option-card"><input type="checkbox" name="Features" value="Live video / camera feeds"/> <label>Live Video / Camera Feeds</label></div>
+          <div class="option-card"><input type="checkbox" name="Features" value="Video recording & playback"/> <label>Video Recording & Playback</label></div>
+          <div class="option-card"><input type="checkbox" name="Features" value="Motion / event detection alerts"/> <label>Motion / Event Alerts</label></div>
+          <div class="option-card"><input type="checkbox" name="Features" value="Real-time notifications"/> <label>Real-Time Notifications</label></div>
+          <div class="option-card"><input type="checkbox" name="Features" value="Reporting & analytics"/> <label>Reporting & Analytics</label></div>
+          <div class="option-card"><input type="checkbox" name="Features" value="Map / location view"/> <label>Map / Location View</label></div>
+          <div class="option-card"><input type="checkbox" name="Features" value="File or document uploads"/> <label>File / Document Uploads</label></div>
+          <div class="option-card"><input type="checkbox" name="Features" value="Customer-facing portal"/> <label>Customer-Facing Portal</label></div>
+          <div class="option-card"><input type="checkbox" name="Features" value="Payment processing"/> <label>Payment Processing</label></div>
+          <div class="option-card"><input type="checkbox" name="Features" value="Scheduling / calendar"/> <label>Scheduling / Calendar</label></div>
+          <div class="option-card"><input type="checkbox" name="Features" value="AI / automation features"/> <label>AI / Automation</label></div>
+          <div class="option-card"><input type="checkbox" name="Features" value="Mobile-friendly design"/> <label>Mobile-Friendly Design</label></div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Are there any other specific features or requirements?</label>
+        <textarea name="Other Features" placeholder="Describe anything not listed above..."></textarea>
+      </div>
+    </div>
+
+    <!-- 04 Users & Scale -->
+    <div class="section">
+      <div class="section-label">04 — Users & Scale</div>
+
+      <div class="field">
+        <label>Who will be using this software?</label>
+        <div class="options-grid">
+          <div class="option-card"><input type="checkbox" name="User Types" value="Internal staff only"/> <label>Internal Staff Only</label></div>
+          <div class="option-card"><input type="checkbox" name="User Types" value="Customers / clients"/> <label>Customers / Clients</label></div>
+          <div class="option-card"><input type="checkbox" name="User Types" value="Managers / admins"/> <label>Managers / Admins</label></div>
+          <div class="option-card"><input type="checkbox" name="User Types" value="Field technicians"/> <label>Field Technicians</label></div>
+          <div class="option-card"><input type="checkbox" name="User Types" value="General public"/> <label>General Public</label></div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="field">
+          <label>Approximate number of users</label>
+          <select name="User Count">
+            <option value="" disabled selected>Select range</option>
+            <option>1–10 (small team)</option>
+            <option>11–50</option>
+            <option>51–200</option>
+            <option>200–1,000</option>
+            <option>1,000+ (large scale)</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Number of locations / sites (if applicable)</label>
+          <select name="Locations">
+            <option value="" disabled selected>Select range</option>
+            <option>1 location</option>
+            <option>2–5 locations</option>
+            <option>6–20 locations</option>
+            <option>20+ locations</option>
+            <option>Not applicable</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- 05 Timeline & Budget -->
+    <div class="section">
+      <div class="section-label">05 — Timeline & Budget</div>
+
+      <div class="two-col">
+        <div class="field">
+          <label>Desired launch timeline</label>
+          <select name="Timeline">
+            <option value="" disabled selected>Select timeline</option>
+            <option>ASAP (under 4 weeks)</option>
+            <option>1–2 months</option>
+            <option>2–4 months</option>
+            <option>4–6 months</option>
+            <option>6+ months</option>
+            <option>No hard deadline</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Estimated budget range</label>
+          <select name="Budget">
+            <option value="" disabled selected>Select budget</option>
+            <option>Under $2,500</option>
+            <option>$2,500 – $7,500</option>
+            <option>$7,500 – $15,000</option>
+            <option>$15,000 – $30,000</option>
+            <option>$30,000+</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Do you have an existing design, mockup, or reference site?</label>
+        <div class="options-grid">
+          <div class="option-card radio"><input type="radio" name="Has Design" value="Yes, I have a full design"/> <label>Yes, full design ready</label></div>
+          <div class="option-card radio"><input type="radio" name="Has Design" value="Yes, rough sketches"/> <label>Rough sketches / wireframes</label></div>
+          <div class="option-card radio"><input type="radio" name="Has Design" value="I have reference sites only"/> <label>Reference sites only</label></div>
+          <div class="option-card radio"><input type="radio" name="Has Design" value="No, starting from scratch"/> <label>Starting from scratch</label></div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>If yes, paste any links to designs or reference sites</label>
+        <input type="text" name="Design Links" placeholder="https://..."/>
+      </div>
+    </div>
+
+    <!-- 06 Anything Else -->
+    <div class="section">
+      <div class="section-label">06 — Anything Else</div>
+      <div class="field">
+        <label>Is there anything else we should know about your project?</label>
+        <textarea name="Additional Notes" placeholder="Challenges, past attempts, specific concerns, or anything else you'd like us to know..."></textarea>
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <div class="submit-area">
+      <p class="submit-note">By submitting this form, you agree to be contacted by Nolvek regarding your project inquiry. Your information will not be shared with third parties.</p>
+      <button type="submit">Submit Intake Form →</button>
+    </div>
+
+  </form>
+
+  <!-- Success Message -->
+  <div id="success-message">
+    <div class="success-icon">✓</div>
+    <h2>We've got your submission.</h2>
+    <p>Thanks for reaching out. We'll review your project details and get back to you within 1–2 business days.</p>
+  </div>
+
+  <script>
+    // Progress bar
+    const progress = document.getElementById('progress');
+    const fields = document.querySelectorAll('input:not([type="hidden"]):not([name="_honey"]), select, textarea');
+
+    function updateProgress() {
+      const filled = [...fields].filter(f => {
+        if (f.type === 'checkbox' || f.type === 'radio') return false;
+        return f.value.trim() !== '';
+      }).length;
+      const total = [...fields].filter(f => f.type !== 'checkbox' && f.type !== 'radio').length;
+      const pct = Math.round((filled / total) * 100);
+      progress.style.width = pct + '%';
+    }
+
+    fields.forEach(f => f.addEventListener('input', updateProgress));
+    fields.forEach(f => f.addEventListener('change', updateProgress));
+
+    // Checkbox group serialization (formsubmit sends them separately, that's fine)
+    // Show success on redirect param
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('submitted') === '1') {
+      document.getElementById('intake-form').style.display = 'none';
+      document.querySelector('.hero').style.display = 'none';
+      document.getElementById('success-message').style.display = 'block';
+    }
+
+    // Add redirect to form
+    const redirectInput = document.createElement('input');
+    redirectInput.type = 'hidden';
+    redirectInput.name = '_next';
+    redirectInput.value = window.location.href.split('?')[0] + '?submitted=1';
+    document.getElementById('intake-form').appendChild(redirectInput);
+  </script>
+</body>
+</html>
