@@ -402,10 +402,22 @@
       <div class="field">
         <label>Preferred Contact Method</label>
         <div class="options-grid">
-          <div class="option-card radio"><input type="radio" name="Preferred Contact" value="Email"/> <label>Email</label></div>
-          <div class="option-card radio"><input type="radio" name="Preferred Contact" value="Phone"/> <label>Phone</label></div>
-          <div class="option-card radio"><input type="radio" name="Preferred Contact" value="Text"/> <label>Text Message</label></div>
-          <div class="option-card radio"><input type="radio" name="Preferred Contact" value="No Preference"/> <label>No Preference</label></div>
+          <div class="option-card radio">
+            <input type="radio" name="Preferred Contact" id="contact-email" value="Email"/>
+            <label for="contact-email">Email</label>
+          </div>
+          <div class="option-card radio">
+            <input type="radio" name="Preferred Contact" id="contact-phone" value="Phone"/>
+            <label for="contact-phone">Phone</label>
+          </div>
+          <div class="option-card radio">
+            <input type="radio" name="Preferred Contact" id="contact-text" value="Text"/>
+            <label for="contact-text">Text Message</label>
+          </div>
+          <div class="option-card radio">
+            <input type="radio" name="Preferred Contact" id="contact-none" value="No Preference"/>
+            <label for="contact-none">No Preference</label>
+          </div>
         </div>
       </div>
     </div>
@@ -418,15 +430,41 @@
         <label>What type of software are you looking to build? <span class="req">*</span></label>
         <div class="hint">Select all that apply.</div>
         <div class="options-grid">
-          <div class="option-card"><input type="checkbox" name="Project Type" value="Web Application"/> <label>Web Application</label></div>
-          <div class="option-card"><input type="checkbox" name="Project Type" value="Mobile App"/> <label>Mobile App</label></div>
-          <div class="option-card"><input type="checkbox" name="Project Type" value="Dashboard / Admin Panel"/> <label>Dashboard / Admin Panel</label></div>
-          <div class="option-card"><input type="checkbox" name="Project Type" value="API / Backend System"/> <label>API / Backend System</label></div>
-          <div class="option-card"><input type="checkbox" name="Project Type" value="Automation Tool"/> <label>Automation Tool</label></div>
-          <div class="option-card"><input type="checkbox" name="Project Type" value="AI Integration"/> <label>AI Integration</label></div>
-          <div class="option-card"><input type="checkbox" name="Project Type" value="Hardware Integration"/> <label>Hardware Integration</label></div>
-          <div class="option-card"><input type="checkbox" name="Project Type" value="Not Sure Yet"/> <label>Not Sure Yet</label></div>
+          <div class="option-card">
+            <input type="checkbox" name="_project_type" id="pt-web" value="Web Application"/>
+            <label for="pt-web">Web Application</label>
+          </div>
+          <div class="option-card">
+            <input type="checkbox" name="_project_type" id="pt-mobile" value="Mobile App"/>
+            <label for="pt-mobile">Mobile App</label>
+          </div>
+          <div class="option-card">
+            <input type="checkbox" name="_project_type" id="pt-dashboard" value="Dashboard / Admin Panel"/>
+            <label for="pt-dashboard">Dashboard / Admin Panel</label>
+          </div>
+          <div class="option-card">
+            <input type="checkbox" name="_project_type" id="pt-api" value="API / Backend System"/>
+            <label for="pt-api">API / Backend System</label>
+          </div>
+          <div class="option-card">
+            <input type="checkbox" name="_project_type" id="pt-auto" value="Automation Tool"/>
+            <label for="pt-auto">Automation Tool</label>
+          </div>
+          <div class="option-card">
+            <input type="checkbox" name="_project_type" id="pt-ai" value="AI Integration"/>
+            <label for="pt-ai">AI Integration</label>
+          </div>
+          <div class="option-card">
+            <input type="checkbox" name="_project_type" id="pt-hw" value="Hardware Integration"/>
+            <label for="pt-hw">Hardware Integration</label>
+          </div>
+          <div class="option-card">
+            <input type="checkbox" name="_project_type" id="pt-notsure" value="Not Sure Yet"/>
+            <label for="pt-notsure">Not Sure Yet</label>
+          </div>
         </div>
+        <!-- Aggregated value sent to FormSubmit -->
+        <input type="hidden" name="Project Type" id="agg-project-type"/>
       </div>
 
       <div class="field">
@@ -469,21 +507,65 @@
         <label>Which of these features do you need? <span class="req">*</span></label>
         <div class="hint">Select all that apply.</div>
         <div class="options-grid">
-          <div class="option-card"><input type="checkbox" name="Features" value="User login / accounts"/> <label>User Login / Accounts</label></div>
-          <div class="option-card"><input type="checkbox" name="Features" value="Role-based access control"/> <label>Role-Based Access Control</label></div>
-          <div class="option-card"><input type="checkbox" name="Features" value="Live video / camera feeds"/> <label>Live Video / Camera Feeds</label></div>
-          <div class="option-card"><input type="checkbox" name="Features" value="Video recording & playback"/> <label>Video Recording & Playback</label></div>
-          <div class="option-card"><input type="checkbox" name="Features" value="Motion / event detection alerts"/> <label>Motion / Event Alerts</label></div>
-          <div class="option-card"><input type="checkbox" name="Features" value="Real-time notifications"/> <label>Real-Time Notifications</label></div>
-          <div class="option-card"><input type="checkbox" name="Features" value="Reporting & analytics"/> <label>Reporting & Analytics</label></div>
-          <div class="option-card"><input type="checkbox" name="Features" value="Map / location view"/> <label>Map / Location View</label></div>
-          <div class="option-card"><input type="checkbox" name="Features" value="File or document uploads"/> <label>File / Document Uploads</label></div>
-          <div class="option-card"><input type="checkbox" name="Features" value="Customer-facing portal"/> <label>Customer-Facing Portal</label></div>
-          <div class="option-card"><input type="checkbox" name="Features" value="Payment processing"/> <label>Payment Processing</label></div>
-          <div class="option-card"><input type="checkbox" name="Features" value="Scheduling / calendar"/> <label>Scheduling / Calendar</label></div>
-          <div class="option-card"><input type="checkbox" name="Features" value="AI / automation features"/> <label>AI / Automation</label></div>
-          <div class="option-card"><input type="checkbox" name="Features" value="Mobile-friendly design"/> <label>Mobile-Friendly Design</label></div>
+          <div class="option-card">
+            <input type="checkbox" name="_features" id="feat-login" value="User login / accounts"/>
+            <label for="feat-login">User Login / Accounts</label>
+          </div>
+          <div class="option-card">
+            <input type="checkbox" name="_features" id="feat-rbac" value="Role-based access control"/>
+            <label for="feat-rbac">Role-Based Access Control</label>
+          </div>
+          <div class="option-card">
+            <input type="checkbox" name="_features" id="feat-live" value="Live video / camera feeds"/>
+            <label for="feat-live">Live Video / Camera Feeds</label>
+          </div>
+          <div class="option-card">
+            <input type="checkbox" name="_features" id="feat-rec" value="Video recording & playback"/>
+            <label for="feat-rec">Video Recording & Playback</label>
+          </div>
+          <div class="option-card">
+            <input type="checkbox" name="_features" id="feat-motion" value="Motion / event detection alerts"/>
+            <label for="feat-motion">Motion / Event Alerts</label>
+          </div>
+          <div class="option-card">
+            <input type="checkbox" name="_features" id="feat-notif" value="Real-time notifications"/>
+            <label for="feat-notif">Real-Time Notifications</label>
+          </div>
+          <div class="option-card">
+            <input type="checkbox" name="_features" id="feat-reports" value="Reporting & analytics"/>
+            <label for="feat-reports">Reporting & Analytics</label>
+          </div>
+          <div class="option-card">
+            <input type="checkbox" name="_features" id="feat-map" value="Map / location view"/>
+            <label for="feat-map">Map / Location View</label>
+          </div>
+          <div class="option-card">
+            <input type="checkbox" name="_features" id="feat-files" value="File or document uploads"/>
+            <label for="feat-files">File / Document Uploads</label>
+          </div>
+          <div class="option-card">
+            <input type="checkbox" name="_features" id="feat-portal" value="Customer-facing portal"/>
+            <label for="feat-portal">Customer-Facing Portal</label>
+          </div>
+          <div class="option-card">
+            <input type="checkbox" name="_features" id="feat-pay" value="Payment processing"/>
+            <label for="feat-pay">Payment Processing</label>
+          </div>
+          <div class="option-card">
+            <input type="checkbox" name="_features" id="feat-sched" value="Scheduling / calendar"/>
+            <label for="feat-sched">Scheduling / Calendar</label>
+          </div>
+          <div class="option-card">
+            <input type="checkbox" name="_features" id="feat-ai" value="AI / automation features"/>
+            <label for="feat-ai">AI / Automation</label>
+          </div>
+          <div class="option-card">
+            <input type="checkbox" name="_features" id="feat-mobile" value="Mobile-friendly design"/>
+            <label for="feat-mobile">Mobile-Friendly Design</label>
+          </div>
         </div>
+        <!-- Aggregated value sent to FormSubmit -->
+        <input type="hidden" name="Features Needed" id="agg-features"/>
       </div>
 
       <div class="field">
@@ -499,12 +581,29 @@
       <div class="field">
         <label>Who will be using this software?</label>
         <div class="options-grid">
-          <div class="option-card"><input type="checkbox" name="User Types" value="Internal staff only"/> <label>Internal Staff Only</label></div>
-          <div class="option-card"><input type="checkbox" name="User Types" value="Customers / clients"/> <label>Customers / Clients</label></div>
-          <div class="option-card"><input type="checkbox" name="User Types" value="Managers / admins"/> <label>Managers / Admins</label></div>
-          <div class="option-card"><input type="checkbox" name="User Types" value="Field technicians"/> <label>Field Technicians</label></div>
-          <div class="option-card"><input type="checkbox" name="User Types" value="General public"/> <label>General Public</label></div>
+          <div class="option-card">
+            <input type="checkbox" name="_user_types" id="ut-staff" value="Internal staff only"/>
+            <label for="ut-staff">Internal Staff Only</label>
+          </div>
+          <div class="option-card">
+            <input type="checkbox" name="_user_types" id="ut-customers" value="Customers / clients"/>
+            <label for="ut-customers">Customers / Clients</label>
+          </div>
+          <div class="option-card">
+            <input type="checkbox" name="_user_types" id="ut-managers" value="Managers / admins"/>
+            <label for="ut-managers">Managers / Admins</label>
+          </div>
+          <div class="option-card">
+            <input type="checkbox" name="_user_types" id="ut-field" value="Field technicians"/>
+            <label for="ut-field">Field Technicians</label>
+          </div>
+          <div class="option-card">
+            <input type="checkbox" name="_user_types" id="ut-public" value="General public"/>
+            <label for="ut-public">General Public</label>
+          </div>
         </div>
+        <!-- Aggregated value sent to FormSubmit -->
+        <input type="hidden" name="User Types" id="agg-user-types"/>
       </div>
 
       <div class="two-col">
@@ -568,10 +667,22 @@
       <div class="field">
         <label>Do you have an existing design, mockup, or reference site?</label>
         <div class="options-grid">
-          <div class="option-card radio"><input type="radio" name="Has Design" value="Yes, I have a full design"/> <label>Yes, full design ready</label></div>
-          <div class="option-card radio"><input type="radio" name="Has Design" value="Yes, rough sketches"/> <label>Rough sketches / wireframes</label></div>
-          <div class="option-card radio"><input type="radio" name="Has Design" value="I have reference sites only"/> <label>Reference sites only</label></div>
-          <div class="option-card radio"><input type="radio" name="Has Design" value="No, starting from scratch"/> <label>Starting from scratch</label></div>
+          <div class="option-card radio">
+            <input type="radio" name="Has Design" id="design-full" value="Yes, I have a full design"/>
+            <label for="design-full">Yes, full design ready</label>
+          </div>
+          <div class="option-card radio">
+            <input type="radio" name="Has Design" id="design-sketches" value="Yes, rough sketches"/>
+            <label for="design-sketches">Rough sketches / wireframes</label>
+          </div>
+          <div class="option-card radio">
+            <input type="radio" name="Has Design" id="design-refs" value="I have reference sites only"/>
+            <label for="design-refs">Reference sites only</label>
+          </div>
+          <div class="option-card radio">
+            <input type="radio" name="Has Design" id="design-scratch" value="No, starting from scratch"/>
+            <label for="design-scratch">Starting from scratch</label>
+          </div>
         </div>
       </div>
 
@@ -608,22 +719,52 @@
   <script>
     // Progress bar
     const progress = document.getElementById('progress');
-    const fields = document.querySelectorAll('input:not([type="hidden"]):not([name="_honey"]), select, textarea');
 
     function updateProgress() {
-      const filled = [...fields].filter(f => {
-        if (f.type === 'checkbox' || f.type === 'radio') return false;
-        return f.value.trim() !== '';
-      }).length;
-      const total = [...fields].filter(f => f.type !== 'checkbox' && f.type !== 'radio').length;
-      const pct = Math.round((filled / total) * 100);
+      let filled = 0;
+      let total = 0;
+
+      // Text / email / tel inputs, selects, textareas (skip hidden + honeypot)
+      document.querySelectorAll(
+        'input[type="text"]:not([name^="_"]):not([style*="display"]), ' +
+        'input[type="email"], input[type="tel"], select, textarea'
+      ).forEach(function (f) {
+        total++;
+        if (f.value.trim() !== '') filled++;
+      });
+
+      // Radio groups — one slot per unique group name
+      var radioGroups = {};
+      document.querySelectorAll('input[type="radio"]').forEach(function (r) {
+        if (radioGroups[r.name] === undefined) radioGroups[r.name] = false;
+        if (r.checked) radioGroups[r.name] = true;
+      });
+      Object.keys(radioGroups).forEach(function (k) {
+        total++;
+        if (radioGroups[k]) filled++;
+      });
+
+      // Checkbox groups — one slot per unique group name
+      var checkboxGroups = {};
+      document.querySelectorAll('input[type="checkbox"]').forEach(function (c) {
+        if (checkboxGroups[c.name] === undefined) checkboxGroups[c.name] = false;
+        if (c.checked) checkboxGroups[c.name] = true;
+      });
+      Object.keys(checkboxGroups).forEach(function (k) {
+        total++;
+        if (checkboxGroups[k]) filled++;
+      });
+
+      var pct = total > 0 ? Math.round((filled / total) * 100) : 0;
       progress.style.width = pct + '%';
     }
 
-    fields.forEach(f => f.addEventListener('input', updateProgress));
-    fields.forEach(f => f.addEventListener('change', updateProgress));
+    // Listen on all interactive fields
+    document.querySelectorAll('input, select, textarea').forEach(function (f) {
+      f.addEventListener('input', updateProgress);
+      f.addEventListener('change', updateProgress);
+    });
 
-    // Checkbox group serialization (formsubmit sends them separately, that's fine)
     // Show success on redirect param
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('submitted') === '1') {
@@ -638,6 +779,22 @@
     redirectInput.name = '_next';
     redirectInput.value = window.location.href.split('?')[0] + '?submitted=1';
     document.getElementById('intake-form').appendChild(redirectInput);
+
+    // Before submit: aggregate checkbox groups into hidden fields
+    // so FormSubmit sends a clean comma-separated list instead of multiple fields.
+    document.getElementById('intake-form').addEventListener('submit', function () {
+      var groups = [
+        { checkboxName: '_project_type', hiddenId: 'agg-project-type' },
+        { checkboxName: '_features',     hiddenId: 'agg-features'      },
+        { checkboxName: '_user_types',   hiddenId: 'agg-user-types'    }
+      ];
+
+      groups.forEach(function (g) {
+        var checked = [...document.querySelectorAll('input[name="' + g.checkboxName + '"]:checked')]
+          .map(function (cb) { return cb.value; });
+        document.getElementById(g.hiddenId).value = checked.length ? checked.join(', ') : 'None selected';
+      });
+    });
   </script>
 </body>
 </html>
